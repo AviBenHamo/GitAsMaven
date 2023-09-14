@@ -73,13 +73,14 @@ task lookForArtifacts {
 afterEvaluate {
     publishing {
         publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = "com.shl"
-                artifactId = "androidsmartheartbluetoothsdk"
-                version = "${smartHeartDependenciesVersions.bluetoothLibraryVersion}"
-                artifact androidSourcesJar
-            }
+        configuration = configurations.deployLibrary
+        repository(url: 'git:releases://git@bitbucket.org:' + COMPANY + '/' + REPOSITORY_NAME + '.git')
+        pom.project {
+            groupId = ARTIFACT_PACKAGE
+            version = ARTIFACT_VERSION
+            artifactId = ARTIFACT_NAME
+            packaging ARTIFACT_PACKAGING
+        	}
         }
     }
 }
